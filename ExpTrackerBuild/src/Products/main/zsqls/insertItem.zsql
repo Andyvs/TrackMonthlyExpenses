@@ -1,0 +1,20 @@
+<dtml-comment>
+title: Insert Items
+arguments: USER_ID product quantity unitprice date
+connection_id:ICM_Database_Connection
+max_rows_:1000
+max_cache_:100
+</dtml-comment>
+
+INSERT INTO PURCHASE (USER_ID,
+     PRODUCT,
+     QUANTITY,
+     UNITPRICE,
+     DATE
+     )
+	       VALUES (<dtml-sqlvar USER_ID  type=nb optional>,
+		           <dtml-sqlvar product  type=nb optional>,
+		           <dtml-sqlvar quantity type=nb optional>,
+		           <dtml-sqlvar unitprice type=nb optional>,
+                   <dtml-sqlvar date type=nb optional>
+                )

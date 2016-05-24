@@ -1,0 +1,274 @@
+	<head>
+		<style type='text/css'>
+			#header {
+			    background-color:black;
+			    color:white;
+			    text-align:center;
+			    padding:5px;
+			}
+			#nav {
+			    line-height:30px;
+			    background-color:#eeeeee;
+			    height:425px;
+			    width:100px;
+			    float:left;
+			    padding:5px; 
+			}
+			#section {
+			    width:350px;
+			    float:left;
+			    padding:10px; 
+			}
+			#footer {
+			    background-color:black;
+			    color:white;
+			    clear:both;
+			    text-align:center;
+			    padding:5px; 
+			}
+		</style>
+		<script type='text/javascript'>
+			function ajaxpage (e) {
+				var con = document.getElementById('section'),
+				   	xhr = new XMLHttpRequest();
+
+				xhr.onreadystatechange = function (e) { 
+					if (xhr.readyState == 4 && xhr.status == 200) {
+			 			con.innerHTML = xhr.responseText;
+				}
+			}
+				xhr.open("POST", e, true);
+				xhr.setRequestHeader('Content-type', 'text/html');
+				xhr.send();
+			};
+
+		function formValidation(formObj) {
+          var fname = formObj['fname'];
+          var lname = formObj['lname'];
+          var dob = formObj['dob'];
+          var gender = formObj['gender'];
+          var userid = formObj['userid'];
+          var password = formObj['password'];
+          var confirmpassword = formObj['confirmpassword'];
+          var admin = formObj['admin'];
+
+          // Method are being called from each condition to validate the fields
+          if (ValidateFName(fname) && ValidateLName(lname) && ValidateDOB(dob) && ValidateGender(gender) &&
+              ValidateUserId(userid) && ValidatePSW(password) && ValidateConfPSW(password, confirmpassword) && 
+              ValidateAdminRole(admin)){
+              
+              return true;
+
+              //var jObject = [];
+
+               // jObject.push(userid);
+                //jObject.push(fname);
+                //jObject.push(lname);
+                //jObject.push(dob);
+                //jObject.push(gender);
+                //jObject.push(password);
+
+                //var JSONObject = encodeURIComponent(JSON.stringify(jObject));
+                //var http = new XMLHttpRequest();
+                 //var url = "tracker/validateRegister";
+                 //var params = "value=" + JSONObject;
+                 //http.open("POST", url, true);
+
+                 //Send the proper header information along with the request
+                 // http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+                 
+                 //http.onreadystatechange = function() {//Call a function when the state changes.
+                   //  if(http.readyState == 4 && http.status == 200) {
+                     //    alert(http.responseText);
+                    // }
+                 //}
+                 //http.send(params);
+          } else {
+              return false;
+          }
+      };
+
+      // User First Name Validation
+      function ValidateFName(f_name) {
+          regx = /^[a-zA-Z ]*$/;
+
+          // Function invoking for validating empty fields.
+          if (!validateEmptyFields(f_name)) {
+              return false;
+          } else if (!validateMinMax(f_name, 8, 24)) {
+              return false;
+          } else if (regx.test(f_name.value)) {
+              return true;
+          } else {
+              alert("User First Name should be Alphabet");
+          }
+      };
+
+      // User Last Name Validation
+      function ValidateLName(l_name) {
+          regx = /^[a-zA-Z ]*$/;
+
+          // Function invoking for validating lenght.
+          if (l_name.value) {
+              if (!validateMinMax(l_name, 8, 24)) {
+                  return false;
+              } else if (regx.test(l_name.value)) {
+                  return true;
+              } else {
+                  alert("User Last Name should be Alphabet");
+                  return false;
+              }
+          }
+          return true;
+      };
+
+      // User Date of Birth Validation
+      function ValidateDOB(dob_obj) {
+          // regular expression to match required date format
+          re = /^\d{1,2}\/\d{1,2}\/\d{4}$/;
+
+          // Function invoking for validating empty fields.
+          if (!validateEmptyFields(dob_obj)) {
+              return false;
+          } else if (!dob_obj.value.match(re)) {
+              alert("Invalid date format: " + dob_obj.value);
+              return false;
+          } else {
+              return true;
+          }
+      };
+
+      // User Gender Validation
+      function ValidateGender(gender) {
+
+          // Function invoking for validating empty fields.
+          if (!validateEmptyFields(gender)) {
+              return false;
+          } else if (gender) {
+              return true;
+          }
+      };
+
+      // User ID Validation
+      function ValidateUserId(uid) {
+          regx = /^[a-zA-Z0-9]*$/;
+
+          // Function invoking for validating empty fields.
+          if (!validateEmptyFields(uid)) {
+              return false;
+          } else if (!validateMinMax(uid, 8, 24)) {
+              return false;
+          } else if (regx.test(uid.value)) {
+              return true;
+          } else {
+              alert("UserID should not have Spacial Charactors.");
+          }
+          return false;
+      };
+
+      // Password Validation
+      function ValidatePSW(passid) {
+          var pwd_spl_chrs = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/;
+          var valid_psw = 0;
+
+          // Function invoking for validating empty fields.
+          if (!validateEmptyFields(passid)) {
+              return false;
+          } else if (!validateMinMax(passid, 8, 24)) {
+              return false;
+          } else if (pwd_spl_chrs.test(passid.value)) {
+              return true;
+          } else {
+              alert("Invalid Password. Password should be Minimum 8 characters at least 1 Uppercase Alphabet, 1 Lowercase Alphabet, 1 Number and 1 Special Character");
+              return false;
+          }
+      };
+
+      // User Confirm Password Validation
+      function ValidateConfPSW(password, confirmPassword) {
+          // Function invoking for validating empty fields.
+          if (!validateEmptyFields(confirmPassword)) {
+              return false;
+          } else if (password.value != confirmPassword.value) {
+              alert("Passwords do not match.");
+              return false;
+          }
+          return true;
+      };
+
+      // User Gender Validation
+      function ValidateAdminRole(admin) {
+
+          // Function invoking for validating empty fields.
+          if (!validateEmptyFields(admin)) {
+              return false;
+          } else if (admin) {
+              return true;
+          }
+      };
+      /**
+       * Pass the value of a field and validate.
+       * @param  {fieldObj} field The field to get the value of
+       */
+      var validateEmptyFields = function(fieldObj) {
+          // This condition id for Radio/Checkboxes.
+          if (fieldObj.length > 1) {
+              if (fieldObj[0].type == 'radio') {
+                  for (var i = 0; i < fieldObj.length; i++) {
+                      if (fieldObj[i].checked)
+                          break;
+                  }
+                  if (i == fieldObj.length)
+                      return alert("Please select " + fieldObj[0].name);
+                  return true;
+              } else if (fieldObj.type == 'select-one') {
+                  for (var i = 0; i < fieldObj.length; i++) {
+                      if (fieldObj.selectedIndex == 0)
+                          return alert("Please select " + fieldObj.name);
+                  }
+                  if (i == fieldObj.length)
+                      return true;
+              }
+          } else if (!fieldObj.value) {
+              alert("Please Enter " + fieldObj.name);
+              return false;
+          } else {
+              return true;
+          }
+      };
+
+      /**
+       * Pass the value of a field and validate.
+       * @param  {fieldObj} field The field to get the value of
+       */
+      var validateMinMax = function(fieldObj, min, max) {
+          if (fieldObj.value.length < min || fieldObj.value.length > max) {
+              alert(fieldObj.name + " length be between " + min + " to " + max);
+          } else {
+              return true;
+          }
+      };
+		</script>
+	</head>
+
+<body>
+<center>
+		<div id="header">
+			<h1>Shopping Kart</h1>
+		</div>
+
+		<div id="nav">
+			<a href="javascript:ajaxpage('/tracker/views/login', 'section');">Login</a>
+			<a href="javascript:ajaxpage('/tracker/views/register', 'section');">Register</a><br>
+		</div>
+
+		<div id="section">
+			<p>Welcome To Shopping Kart.</p>
+		</div>
+
+		<div id="footer">
+			Copyright © ShopKart.com
+		</div>
+
+</body>
+<center>

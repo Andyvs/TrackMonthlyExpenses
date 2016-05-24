@@ -1,0 +1,22 @@
+#!/usr/bin/python2.6 -S
+
+import sys
+sys.path[0:0] = [
+    '/vanand/TrackMonthlyExpenses/ExpTrackerBuild/parts/instance',
+    ]
+
+
+import os
+path = sys.path[0]
+if os.environ.get('PYTHONPATH'):
+    path = os.pathsep.join([path, os.environ['PYTHONPATH']])
+os.environ['BUILDOUT_ORIGINAL_PYTHONPATH'] = os.environ.get('PYTHONPATH', '')
+os.environ['PYTHONPATH'] = path
+import site # imports custom buildout-generated site.py
+
+import plone.recipe.zope2instance.ctl
+
+if __name__ == '__main__':
+    sys.exit(plone.recipe.zope2instance.ctl.main(
+        ['-C', '/vanand/TrackMonthlyExpenses/ExpTrackerBuild/parts/instance/etc/zope.conf']
+        + sys.argv[1:]))

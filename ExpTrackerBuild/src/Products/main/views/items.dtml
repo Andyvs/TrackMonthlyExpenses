@@ -1,0 +1,72 @@
+   
+    <head>
+        <script type="text/javascript">
+            function addToTable(){
+              var table = document.getElementById('tableData');
+              var form = document.getElementById('purchaseForm');
+            }
+
+        function sendTableData(){
+            var username = document.getElementById('username').value;
+            var jObject = [];
+
+            // get table ID
+            var elementTable = document.getElementById('tableData');
+
+            // iterate through the table rows
+            for (var i = 0; i < elementTable.rows.length; i++)
+            {
+
+                // create array within the array - 2nd dimension
+                jObject[i] = [];
+
+                // columns within the row
+                for (var j = 0; j < elementTable.rows[i].cells.length; j++)
+                {
+                    jObject[i][j] = elementTable.rows[i].cells[j].innerText;
+                }
+                jObject[i][j+1] = username;
+            }
+
+             var JSONObject = encodeURIComponent(JSON.stringify(jObject));
+             var http = new XMLHttpRequest();
+             var url = "tracker/savePurchase";
+             var params = "value=" + JSONObject;
+             http.open("POST", url, true);
+
+             //Send the proper header information along with the request
+             http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+             
+             http.onreadystatechange = function() {//Call a function when the state changes.
+                 if(http.readyState == 4 && http.status == 200) {
+                     alert(http.responseText);
+                 }
+             }
+             http.send(params);             
+             alert("Completed");
+        }
+        </script>
+    </head>
+    <body>
+        <center>
+        <h2>Grocery List</h2>
+        <form id="purchaseForm" name="purchaseForm" action="savePurchase" method="POST">
+            <input type="hidden" name="USER_ID" id="USER_ID" value="<dtml-var USER_ID>">
+
+            <span class="product">Product</span>
+            <input type="text" required="required" name="product">
+            
+            <span class="quantity">Quantity</span>
+            <input type="text" required="required" name="quantity" maxlength="8" size="8">
+
+            <span class="unitprice">Unit Price</span>
+            <input type="text" required="required" name="unitprice">
+
+            <span> <input type="button" value="Add" name="itemList" onclick="addToTable()"></span>
+
+            <br/>
+            <ul class="iTlist"></ul>
+            <span> <input type="submit" value="Complete" name="save" onclick="sendTableData();return false"> </span><br>
+        </form>
+        <center>
+    </body>

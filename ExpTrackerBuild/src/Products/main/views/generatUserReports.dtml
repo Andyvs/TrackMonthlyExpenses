@@ -1,0 +1,54 @@
+
+	<head>
+		<script type="text/javascript">
+			function ajaxpage () {
+	                var divObj = document.getElementById('resultSet');
+
+	                    userid = document.getElementById('userid').value;
+	                    item = document.getElementById('item').value;
+	                    startdate = document.getElementById('startdate').value;
+	                    enddate = document.getElementById('enddate').value;
+
+
+	                jObject = []
+
+	                jObject.push(userid)
+	                jObject.push(item)
+	                jObject.push(startdate)
+	                jObject.push(enddate)
+
+	                var JSONObject = encodeURIComponent(JSON.stringify(jObject));
+	                var http = new XMLHttpRequest();
+	                var url = "tracker/generateReports";
+	                var params = "repObj=" + JSONObject;
+	                http.open("POST", url, true);
+
+	                // Send the proper header information along with the request
+	                http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+	                 
+	                http.onreadystatechange = function() {//Call a function when the state changes.
+	                if(http.readyState == 4 && http.status == 200) {
+	                    divObj.innerHTML = http.responseText;
+
+	                  }
+	                }
+	                http.send(params);           
+        		};
+      </script>
+	</head>
+	<body>
+		<center>
+			<form>
+        		</br>
+
+				Users : <input type="text" name="userid" id="userid" value=""></br>
+				items : <input type="text" name="item" id="item" value=""></br>
+				Start Date : <input type="date" name="startdate" id="startdate" value=""></br>
+				End Date : <input type="date" name="enddate" id="enddate" value=""></br>		
+    		
+    			<br><input type="button" name="Reports" value="Reports" onclick="return ajaxpage()">
+          		<!-- <span><a href="javascript:ajaxpage();">Reports</a></span> -->
+
+          		<div id="resultSet"></div>
+          	</form>
+        </center>

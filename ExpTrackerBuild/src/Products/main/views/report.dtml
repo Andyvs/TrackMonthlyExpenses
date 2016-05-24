@@ -1,0 +1,41 @@
+     <center>
+        <h2>Expenses Reports</h2>
+        <div id="myMonthlyReport">
+        <form>
+            <dtml-in getreport>
+                <dtml-if sequence-start>
+                    <div id="reportDT">
+                        <table cellpadding="2" id="tableData" cellspacing="1" width="100%" border="0" align="center" class="ze-data datatable">
+                            <thead>
+                                <tr>
+                                    <th>User ID</th>
+                                    <th>Product</th>
+                                    <th>Quantity</th>
+                                    <th>Unit Price</th>
+                                    <th>Date</th>
+                                </tr>
+                                <tr>
+                                </tr>
+                            </thead>
+                              <tfoot>
+                                    <tr>
+                                      <th>Totol Cost</th>
+                                      <td> <dtml-var "_['sequence-item']['total_cost']"> </td>
+                                    </tr>
+                              </tfoot>
+                            <tbody>
+                        </dtml-if>
+                            <tr>
+                                <td> <dtml-var "_['sequence-item']['USER_ID']"> </td>
+                                <td> <dtml-var "_['sequence-item']['product']"> </td>
+                                <td> <dtml-var "_['sequence-item']['quantity']"> </td>
+                                <td> <dtml-var "_['sequence-item']['unitprice']"> </td>
+                                <td> <dtml-var "_['sequence-item']['date']"> </td>
+                            </tr>
+                            <tr>
+                        </dtml-in>
+                     </tbody>
+                 </table>
+            </div>
+         </form>
+        <center>

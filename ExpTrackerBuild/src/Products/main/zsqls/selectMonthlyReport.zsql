@@ -1,0 +1,26 @@
+<dtml-comment>
+title: Select Monthly report of users
+arguments: user_id product start_date end_date
+connection_id:ICM_Database_Connection
+max_rows_:1000
+max_cache_:100
+</dtml-comment>
+
+select 
+      purchase_idn,
+      user_id,
+      product,
+      quantity,
+      unitprice,
+      (quantity*unitprice) as total_cost,
+      date
+from purchase
+
+WHERE
+      (USER_ID=<dtml-sqlvar user_id type=string>)
+      OR
+      (product=<dtml-sqlvar product type=string>)
+      OR
+      (date between <dtml-sqlvar start_date type=string> AND <dtml-sqlvar end_date type=string>)
+group by purchase_idn, total_cost
+  

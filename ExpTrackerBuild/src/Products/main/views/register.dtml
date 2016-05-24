@@ -1,0 +1,52 @@
+  <body>
+    <center>
+  <form name="trackerForm" action="validateRegister" method="post">
+                <div>
+                  <h2>Regester Form</h2>
+                  <table>
+                      <tr>
+                          <td><label class="label-mandatory">First Name : </label></td>
+                          <td><input type="text" name="fname" size="30" value="" required></td>
+                      </tr>
+                      <tr>
+                          <td><label>Last Name : </label></td>
+                          <td><input type="text" name="lname" size="30"></td>
+                      </tr>
+                      <tr>
+                          <td><label class="label-mandatory">DOB : </label></td>
+                          <td><input type="text" name="dob" size="30" required></td>
+                      </tr>
+                      <tr>
+                          <td><label class="label-mandatory" name="gender" id="gender">Gender :</label></td>
+                          <td><input type="radio" name="gender" value="Male"><span>Male</span>
+                              <input type="radio" name="gender" value="Female"><span>Female</span>
+                          </td>
+                      </tr>
+                      <tr>
+                          <td><label class="label-mandatory">User id :</label></li>
+                          </td>
+                          <td><input type="text" name="userid" size="30" min="8" max="24" required></td>
+                      </tr>
+                      <tr>
+                          <td><label class="label-mandatory">Password :</label></td>
+                          <td><input type="password" name="password" size="30" min="8" max="24" required></td>
+                      </tr>
+                      <tr>
+                          <td><label class="label-mandatory">Confirm Passsword :</label></td>
+                          <td><input type="password" name="confirmpassword" size="30" required></td>
+                      </tr>
+                    </br>
+                      <tr>
+                          <td><label class="label-mandatory" name="admin" id="admin">Admin Role :</label></td>
+                          <td><input type="radio" name="admin" value="Y"><span>Y</span>
+                              <input type="radio" name="admin" value="N"><span>N</span>
+                           </td>
+                      </tr>
+                  </table>
+              </div>
+              <div id="register">
+                 <br><input type="submit" name="register" value="Register" onclick="return formValidation(trackerForm)">
+              </div>
+            </form>
+            </center>
+          </body>

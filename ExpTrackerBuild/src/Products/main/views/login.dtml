@@ -1,0 +1,34 @@
+  <head>
+      <script type='text/javascript'>
+                function ajaxpage (e) {
+                    var con = document.getElementById('section'),
+                        xhr = new XMLHttpRequest();
+
+                    xhr.onreadystatechange = function (e) { 
+                        if (xhr.readyState == 4 && xhr.status == 200) {
+                            con.innerHTML = xhr.responseText;
+                        }
+                     }
+                    xhr.open("POST", e, true);
+                    xhr.setRequestHeader('Content-type', 'text/html');
+                    xhr.send();
+                };
+        </script>
+    </head>
+  <body>
+    <center>
+    <form name="LoginForm" action="validateLogin" method="post" target="_self">
+      <h2>Login Page</h2>
+       <h3>Welcome To Shopping Kart</h3>
+         <p> 
+            <label class="uname">User ID :</label>
+            <input id="USER_ID" name="USER_ID" required="required" value='' type="text" placeholder="eg. sskhan"/>
+            <label class="youpasswd">Password :</label>
+            <input id="PASSWORD" name="PASSWORD" required="required" value='' type="password" placeholder="eg. X8df!90EO" /> 
+         </p>
+         <p> 
+            <input type="submit" value="Login" name="login">
+         </p>
+    </form>
+</center>
+</body>

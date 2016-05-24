@@ -1,0 +1,159 @@
+   
+    <head>
+        <script type="text/javascript">
+        function addToTable(formObj){
+            var userid = formObj['USER_ID'];
+            var product = formObj['product'];
+            var quantity = formObj['quantity'];
+            var unitprice = formObj['unitprice'];
+
+            if (ValidateProduct(product) && ValidateQuantity(quantity) && ValidateUnitPrice(unitprice)){
+                return alert("Added Data to the table");
+            }
+            else{
+                return false;            
+            }
+
+        };
+
+      // User First Name Validation
+      function ValidateProduct(product) {
+          regx = /^[a-zA-Z ]*$/;
+
+          // Function invoking for validating empty fields.
+          if (!validateEmptyFields(product)) {
+              return false;
+           }else if (!validateMinMax(product, 2, 8)) {
+              return false;
+          } else if (regx.test(product.value)) {
+              return true;
+          } else {
+              alert("User Procuct should be Alphabet");
+              return false;
+          }
+      };
+
+    function ValidateQuantity(quantity) {
+          regx = /^[0-9]*$/;
+
+             if (!validateEmptyFields(quantity)) {
+                  return false;
+              } else if (regx.test(quantity.value)) {
+                  return true;
+              } else {
+                  alert("Quantity should be integer");
+                  return false;
+              }
+            return true;    
+          };
+
+      function ValidateUnitPrice(unitprice) {
+          regx = /^[0-9]*$/;
+
+          // Function invoking for validating lenght.
+              if (!validateEmptyFields(unitprice)) {
+                  return false;
+              } else if (regx.test(unitprice.value)) {
+                  return true;
+              } else {
+                  alert("Unit Price shoulbe be integer");
+                  return false;
+              }
+          };
+
+        /**
+       * Pass the value of a field and validate.
+       * @param  {fieldObj} field The field to get the value of
+       */
+          var validateMinMax = function(fieldObj, min, max) {
+              if (fieldObj.length < min || fieldObj.length > max) {
+                  alert(fieldObj.name + " length be between " + min + " to " + max);
+              } else {
+                  return true;
+              }
+              return true;
+          }; 
+
+        /**
+       * Pass the value of a field and validate.
+       * @param  {fieldObj} field The field to get the value of
+       */
+      var validateEmptyFields = function(fieldObj) {
+          // This condition id for Radio/Checkboxes.
+          if (fieldObj.length > 1) {
+              if (fieldObj[0].type == 'radio') {
+                  for (var i = 0; i < fieldObj.length; i++) {
+                      if (fieldObj[i].checked)
+                          break;
+                  }
+                  if (i == fieldObj.length)
+                      return alert("Please select " + fieldObj[0].name);
+                  return true;
+              } else if (fieldObj.type == 'select-one') {
+                  for (var i = 0; i < fieldObj.length; i++) {
+                      if (fieldObj.selectedIndex == 0)
+                          return alert("Please select " + fieldObj.name);
+                  }
+                  if (i == fieldObj.length)
+                      return true;
+              }
+          } else if (!fieldObj.value) {
+              alert("Please Enter " + fieldObj.name);
+              return false;
+          } else {
+              return true;
+          }
+      };
+
+          function ajaxpage () {
+                var userid = document.getElementById('USER_ID').value;
+                    divObj = document.getElementById('resultSet');
+
+                jObject = []
+                jObject.push(userid)
+                var JSONObject = encodeURIComponent(JSON.stringify(jObject));
+                var http = new XMLHttpRequest();
+                var url = "tracker/reportPage";
+                var params = "userid=" + JSONObject;
+                http.open("POST", url, true);
+
+                // Send the proper header information along with the request
+                http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+                 
+                http.onreadystatechange = function() {//Call a function when the state changes.
+                if(http.readyState == 4 && http.status == 200) {
+                    divObj.innerHTML = http.responseText;
+
+                  }
+                }
+                http.send(params);           
+        };
+      </script>
+    </head>
+    <body>
+        <center>
+        <h2>Grocery List</h2>
+        <div id="itemPurchase">
+        <form id="purchaseForm" name="purchaseForm" action="savePurchase" method="post">
+            <input type="hidden" name="USER_ID" id="USER_ID" value="<dtml-var USER_ID>">
+
+            <span class="product">Product</span>
+            <input type="text" required="required" name="product">
+            
+            <span class="quantity">Quantity</span>
+            <input type="number" required="required" name="quantity" maxlength="8" size="8">
+
+            <span class="unitprice">Unit Price</span>
+            <input type="number" required="required" name="unitprice">
+
+            <span> <input type="submit" value="Add" name="itemList" onclick="return addToTable(purchaseForm);"></span>
+        </form>
+        </div>
+
+        </br>
+          <span><a href="javascript:ajaxpage();">Reports</a></span>
+
+        <div id="resultSet"></div>
+
+        <center>
+    </body>

@@ -1,0 +1,25 @@
+<dtml-comment>
+title: Insert User Details
+arguments: USER_ID FIRST_NAME LAST_NAME DOB GENDER PASSWORD ADMIN
+connection_id:ICM_Database_Connection
+max_rows_:1000
+max_cache_:100
+</dtml-comment>
+
+
+INSERT INTO USERS (USER_ID,
+     FIRST_NAME,
+     LAST_NAME,
+     DOB,
+     GENDER,
+     PASSWORD,
+     ROLE
+     )
+		    VALUES (<dtml-sqlvar USER_ID  type=nb optional>,
+        			<dtml-sqlvar FIRST_NAME  type=nb optional>,
+        			<dtml-sqlvar LAST_NAME  type=nb optional>,
+        			<dtml-sqlvar DOB type=nb optional>,
+        			<dtml-sqlvar GENDER type=nb optional>,
+        			<dtml-sqlvar PASSWORD type=nb optional>,
+                    <dtml-sqlvar ADMIN type=nb optional>
+                    )

@@ -1,0 +1,14 @@
+<dtml-comment>
+title: Select Items
+arguments: USER_ID product
+connection_id:ICM_Database_Connection
+max_rows_:1000
+max_cache_:100
+</dtml-comment>
+
+SELECT product 
+	FROM purchase
+WHERE
+	USER_ID=<dtml-sqlvar USER_ID type=string>
+	AND 
+	product=<dtml-sqlvar product type=string>

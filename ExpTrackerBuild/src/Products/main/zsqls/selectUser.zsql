@@ -1,0 +1,12 @@
+<dtml-comment>
+title: Select user details
+arguments: USER_ID
+connection_id:ICM_Database_Connection
+max_rows_:1000
+max_cache_:100
+</dtml-comment>
+
+SELECT * 
+	FROM USERS
+WHERE
+    USER_ID=<dtml-sqlvar USER_ID type=string>
